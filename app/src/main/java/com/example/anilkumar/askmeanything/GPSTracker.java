@@ -1,6 +1,7 @@
 package com.example.anilkumar.askmeanything;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
@@ -18,10 +19,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+
 /**
  * Created by Anil Kumar on 29-11-2015.
  */
 public class GPSTracker extends Service implements LocationListener {
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
 
     private final Context mContext;
 
@@ -34,8 +38,8 @@ public class GPSTracker extends Service implements LocationListener {
     boolean canGetLocation = false;
 
     Location location; // location
-    double latitude; // latitude
-    double longitude; // longitude
+    public static double latitude; // latitude
+    public static double longitude; // longitude
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -64,10 +68,22 @@ public class GPSTracker extends Service implements LocationListener {
             } else {
                 Log.d("CHECK", "Inside ELSE");
                 this.canGetLocation = true;
-                /*if (isNetworkEnabled) {
-                    Log.d("CHECK", "Inside isNetworkEnabled");
-                    if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                            || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                //check for permission
+
+                if(ContextCompat.checkSelfPermission(mContext,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                    //explanation
+                    if(ActivityCompat.shouldShowRequestPermissionRationale((Activity) mContext,Manifest.permission.ACCESS_FINE_LOCATION)){
+
+                    }else{
+                        ActivityCompat.requestPermissions((Activity) mContext,
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                MY_PERMISSIONS_REQUEST_LOCATION);
+                    }
+                }
+                else {
+                    if (isNetworkEnabled) {
+                        Log.d("CHECK", "Inside isNetworkEnabled");
                         locationManager.requestLocationUpdates(
                                 LocationManager.NETWORK_PROVIDER,
                                 MIN_TIME_BW_UPDATES,
@@ -82,14 +98,8 @@ public class GPSTracker extends Service implements LocationListener {
                             }
                         }
                     }
-                }
-                // if GPS Enabled get lat/long using GPS Services
-                if (isGPSEnabled) {
-                    Log.d("CHECK", "Inside isGPSEnabled");
-                    if (location == null) {
-                        Log.d("CHECK", "Inside isGPSEnabled && location == null");
-                        //if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                               // || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    if (isGPSEnabled) {
+                        if (location == null) {
                             locationManager.requestLocationUpdates(
                                     LocationManager.GPS_PROVIDER,
                                     MIN_TIME_BW_UPDATES,
@@ -103,12 +113,11 @@ public class GPSTracker extends Service implements LocationListener {
                                     longitude = location.getLongitude();
                                 }
                             }
-                        //}
+                        }
                     }
-                }*/
-                //Log.d("Check : ", "lat and long set.");
-                latitude = 28.517873;
-                longitude = 77.383402;
+                }
+                //latitude = 28.517873;
+                //longitude = 77.383402;
                 Log.d("CHECK", "lat : "+latitude+",lon : "+longitude);
             }
         }catch (Exception e){
@@ -204,6 +213,30 @@ public class GPSTracker extends Service implements LocationListener {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
     @Override

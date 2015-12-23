@@ -17,17 +17,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SinglePlaceActivity"
             android:label="@string/title_activity_single_place"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAzMGYw7DrHns5gypRvqLkp-Q5BFK5RsK8" />
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".StartPage"
             android:label="@string/title_activity_start_page"
@@ -37,6 +31,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="Places on Map">
         </activity>
     </application>
 

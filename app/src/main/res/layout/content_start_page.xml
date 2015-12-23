@@ -19,11 +19,12 @@
         android:layout_marginTop="53dp"
         android:width="250dp"
         android:hint="Search a Place"
-        android:paddingLeft="20dp"
-        android:imeOptions="actionDone"
+        android:paddingLeft="10dp"
+        android:imeOptions="actionSearch"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:completionThreshold="1"/>
+        android:completionThreshold="1"
+        android:singleLine="true"/>
 
     <Button
         android:layout_width="wrap_content"

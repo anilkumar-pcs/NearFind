@@ -21,7 +21,6 @@ public class GooglePlaces {
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     // Google API Key
     //private static final String API_KEY = "AIzaSyAzMGYw7DrHns5gypRvqLkp-Q5BFK5RsK8";
-    //private static final String API_KEY = "AIzaSyCD8ric5fK6THj3x9lqmhvqlrvgvG3zMbk";
     //This is BrowserKey
     private static final String API_KEY = "AIzaSyClm5wsno0BYC8EE5mHVfEFio94yEirY-Y";
     // Google Places serach url's
@@ -87,6 +86,7 @@ public class GooglePlaces {
             request.getUrl().put("reference", reference);
             request.getUrl().put("sensor", "false");
 
+            Log.d("Single Place Url", "" + request.getUrl());
             PlaceDetails place = request.execute().parseAs(PlaceDetails.class);
 
             return place;

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     GooglePlaces googlePlaces;
 
     // Places List
-    PlacesList nearPlaces;
+    public static PlacesList nearPlaces;
 
     // GPS Location
     GPSTracker gps;
@@ -119,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("near_places", nearPlaces);
                 // staring activity
                 startActivity(i);*/
-                alert.showAlertDialog(MainActivity.this,"Alert","Button Functionality not implemented !",false);
+                //alert.showAlertDialog(MainActivity.this,"Alert","Button Functionality not implemented !",false);
+                Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -146,14 +149,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     /**
@@ -248,6 +243,12 @@ public class MainActivity extends AppCompatActivity {
 
                             // Adding data into listview
                             lv.setAdapter(adapter);
+
+                            //SnackBar
+                            Snackbar snackbar = Snackbar
+                                    .make((CoordinatorLayout) findViewById(R.id.coordLayout),
+                                    "Found "+placesListItems.size()+" Results", Snackbar.LENGTH_SHORT);
+                            snackbar.show();
                         }
                     }
                     else if(status.equals("ZERO_RESULTS")){
